@@ -17,7 +17,7 @@ export default function LoginPage() {
 
     try {
       await signIn(email, password);
-      router.push('/admin/create-post');
+      router.push('/');
     } catch (err) {
       setError('Failed to log in. Please check your credentials.');
       console.error(err);

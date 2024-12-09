@@ -1,5 +1,6 @@
 import { getBlogPosts } from '@/lib/blogUtils';
 import { notFound } from 'next/navigation';
+import { Timestamp } from 'firebase/firestore';
 
 export default async function BlogPostPage({ 
   params 
@@ -13,12 +14,17 @@ export default async function BlogPostPage({
     notFound();
   }
 
+  // Convert Firestore Timestamp to Date
+  const publishDate = post.createdAt instanceof Timestamp 
+    ? post.createdAt.toDate() 
+    : new Date(post.createdAt);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <article className="max-w-2xl mx-auto">
         <h1 className="text-4xl font-bold mb-6">{post.title}</h1>
         <div className="text-gray-600 mb-6">
-          Published on {new Date(post.createdAt).toLocaleDateString()}
+          Published on {publishDate.toLocaleDateString()}
         </div>
         <div className="prose lg:prose-xl">
           {post.content}

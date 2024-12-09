@@ -7,7 +7,8 @@ import {
     getDocs, 
     query, 
     where, 
-    orderBy 
+    orderBy,
+    serverTimestamp
   } from 'firebase/firestore';
   import { db } from './firebase';
   import { BlogPost } from './types';
@@ -17,8 +18,8 @@ import {
       const postsCollection = collection(db, 'posts');
       const docRef = await addDoc(postsCollection, {
         ...post,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
       });
       return docRef.id;
     } catch (error) {
