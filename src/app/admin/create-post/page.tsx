@@ -52,7 +52,7 @@ export default function CreatePostPage() {
         <div className="mb-4">
           <label 
             htmlFor="title" 
-            className="block text-gray-700 font-bold mb-2"
+            className="block font-bold mb-2"
           >
             Title
           </label>
@@ -65,14 +65,14 @@ export default function CreatePostPage() {
               // Auto-generate slug
               setSlug(e.target.value.toLowerCase().replace(/\s+/g, '-'));
             }}
-            className="w-full px-3 py-2 border rounded"
+            className="input-field w-full px-3 py-2 border rounded"
             required
           />
         </div>
         <div className="mb-4">
           <label 
             htmlFor="content" 
-            className="block text-gray-700 font-bold mb-2"
+            className="block text-gray-300 font-bold mb-2"
           >
             Content
           </label>
@@ -80,14 +80,14 @@ export default function CreatePostPage() {
             id="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            className="w-full px-3 py-2 border rounded h-64"
+            className="w-full px-3 py-2 border text-black rounded h-64"
             required
           />
         </div>
         <div className="mb-4">
           <label 
             htmlFor="slug" 
-            className="block text-gray-700 font-bold mb-2"
+            className="block text-gray-300 font-bold mb-2"
           >
             Slug
           </label>
@@ -96,7 +96,7 @@ export default function CreatePostPage() {
             id="slug"
             value={slug}
             onChange={(e) => setSlug(e.target.value)}
-            className="w-full px-3 py-2 border rounded"
+            className="w-full px-3 py-2 text-black border rounded"
             required
           />
         </div>
