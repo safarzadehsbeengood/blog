@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 // import localFont from "next/font/local";
 import { JetBrains_Mono } from 'next/font/google'
 import "../styles/globals.css";
-import Navbar from '@/components/NavBar'
+import Navbar from '@/components/NavBar';
+import Title from '@/components/Title';
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'] });
 
@@ -23,8 +24,14 @@ export default function RootLayout({
         className={`${jetbrainsMono.className} antialiased`}
       >
         <AuthProvider>
+          <Title />
           <Navbar />
-          {children}
+          <div className="mx-auto max-w-5xl bg-black min-h-screen shadow-lg">
+            <main className="p-4">
+              {children}
+            </main>
+
+          </div>
         </AuthProvider>
       </body>
     </html>

@@ -7,6 +7,13 @@ import { getBlogPosts } from '@/lib/blogUtils';
 import { BlogPost } from '@/lib/types';
 import { Timestamp } from 'firebase/firestore';
 
+// Helper function to strip HTML tags and get plain text
+const stripHtml = (html: string) => {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || '';
+};
+
 export default function Home() {
   const { user, logout } = useAuth();
   const [latestPosts, setLatestPosts] = useState<BlogPost[]>([]);
@@ -37,7 +44,7 @@ export default function Home() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-6">Welcome to My Blog!</h1>
-      <p className="text-xl mb-8">Ryan Safarzadeh</p>
+      <p className="text-xl mb-8">I will be sharing miscellaneous projects and stuff here.</p>
       
       <div className="flex space-x-4 mb-12">
         <Link 
@@ -57,7 +64,7 @@ export default function Home() {
             </Link>
             <button 
               onClick={() => logout()}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition"
             >
               Logout
             </button>
@@ -89,23 +96,23 @@ export default function Home() {
                 key={post.id} 
                 className="border rounded-lg p-6 shadow-md hover:shadow-lg transition"
               >
-                <h3 className="text-xl font-semibold mb-2">
+                <div className="text-xl font-semibold mb-2">
                   <Link 
                     href={`/blog/${post.slug}`}
-                    className="text-blue-600 hover:text-blue-800"
+                    className="text-gray-400 hover:text-white hover:underline"
                   >
                     {post.title}
                   </Link>
-                </h3>
+                </div>
                 <p className="text-gray-600 text-sm mb-3">
                   {formatDate(post.createdAt)}
                 </p>
                 <p className="text-gray-700 mb-4">
-                  {post.content.slice(0, 100)}...
+                  {stripHtml(post.content).slice(0, 150)}...
                 </p>
                 <Link 
                   href={`/blog/${post.slug}`}
-                  className="text-blue-500 hover:underline text-sm"
+                  className="text-gray-400 hover:underline hover:underline text-sm"
                 >
                   Read More →
                 </Link>
@@ -120,7 +127,7 @@ export default function Home() {
           <div className="mt-8 text-center">
             <Link 
               href="/blog"
-              className="text-blue-500 hover:underline"
+              className="text-gray-400 hover:text-white hover:underline"
             >
               View All Posts →
             </Link>
