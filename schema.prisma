@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  content   String   @db.Text
+  slug      String   @unique
+  published Boolean  @default(true)
+  authorId  String   // Firebase user ID
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

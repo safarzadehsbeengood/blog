@@ -239,7 +239,7 @@ export default function CreatePostPage() {
         published: true,
         createdAt: new Date(),
         updatedAt: new Date()
-      });
+      }, user.uid);
 
       router.push('/blog');
     } catch (error) {
