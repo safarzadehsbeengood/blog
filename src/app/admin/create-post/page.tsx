@@ -7,6 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useEditor, EditorContent, Editor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
+import Link from 'next/link';
 
 const editorStyles = `
   .ProseMirror {
@@ -97,7 +98,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
         type="button"
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
-        className={`p-2 rounded hover:bg-gray-900 ${
+        className={`p-2 rounded hover:bg-gray-700 ${
           editor.isActive('bold') ? 'bg-gray-800' : ''
         }`}
       >
@@ -107,7 +108,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
         type="button"
         onClick={() => editor.chain().focus().toggleItalic().run()}
         disabled={!editor.can().chain().focus().toggleItalic().run()}
-        className={`p-2 rounded hover:bg-gray-900 ${
+        className={`p-2 rounded hover:bg-gray-700 ${
           editor.isActive('italic') ? 'bg-gray-800' : ''
         }`}
       >
@@ -117,8 +118,8 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
         type="button"
         onClick={() => editor.chain().focus().toggleStrike().run()}
         disabled={!editor.can().chain().focus().toggleStrike().run()}
-        className={`p-2 rounded hover:bg-gray-900 ${
-          editor.isActive('strike') ? 'bg-gray-800' : ''
+        className={`p-2 rounded hover:bg-gray-700 ${
+          editor.isActive('strike') ? 'bg-gray-600' : ''
         }`}
       >
         <span className="line-through">S</span>
@@ -126,7 +127,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={`p-2 rounded hover:bg-gray-900 ${
+        className={`p-2 rounded hover:bg-gray-700 ${
           editor.isActive('heading', { level: 2 }) ? 'bg-gray-800' : ''
         }`}
       >
@@ -135,8 +136,8 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        className={`p-2 rounded hover:bg-gray-900 ${
-          editor.isActive('heading', { level: 3 }) ? 'bg-gray-800' : ''
+        className={`p-2 rounded hover:bg-gray-700 ${
+          editor.isActive('heading', { level: 3 }) ? 'bg-gray-600' : ''
         }`}
       >
         H3
@@ -144,7 +145,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={`p-2 rounded hover:bg-gray-900 ${
+        className={`p-2 rounded hover:bg-gray-700 ${
           editor.isActive('bulletList') ? 'bg-gray-800' : ''
         }`}
       >
@@ -153,8 +154,8 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={`p-2 rounded hover:bg-gray-900 ${
-          editor.isActive('orderedList') ? 'bg-gray-800' : ''
+        className={`p-2 rounded hover:bg-gray-700 ${
+          editor.isActive('orderedList') ? 'bg-gray-600' : ''
         }`}
       >
         1. List
@@ -162,13 +163,13 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={`p-2 rounded hover:bg-gray-900 ${
-          editor.isActive('blockquote') ? 'bg-gray-800' : ''
+        className={`p-2 rounded hover:bg-gray-700 ${
+          editor.isActive('blockquote') ? 'bg-gray-600' : ''
         }`}
       >
         Quote
       </button>
-      <label className="flex items-center gap-2 cursor-pointer p-2 rounded hover:bg-gray-900">
+      <label className="flex items-center gap-2 cursor-pointer p-2 rounded hover:bg-gray-700">
         <span>Image</span>
         <input
           type="file"
@@ -306,12 +307,20 @@ export default function CreatePostPage() {
             </div>
           </div>
         </div>
-        <button 
-          type="submit" 
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-        >
-          Create Post
-        </button>
+        <div className="flex justify-evenly">
+          <button 
+            type="submit" 
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
+            Create Post
+          </button>
+          <Link
+            href='/' 
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          >
+            Cancel
+          </Link>
+        </div>
       </form>
     </div>
   );
