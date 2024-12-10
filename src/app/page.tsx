@@ -6,13 +6,7 @@ import { useState, useEffect } from 'react';
 import { getBlogPosts } from '@/lib/blogUtils';
 import { BlogPost } from '@/lib/types';
 import { Timestamp } from 'firebase/firestore';
-
-// Helper function to strip HTML tags and get plain text
-const stripHtml = (html: string) => {
-  const tmp = document.createElement('div');
-  tmp.innerHTML = html;
-  return tmp.textContent || tmp.innerText || '';
-};
+import PostPreview from '@/components/PostPreview';
 
 export default function Home() {
   const { user, logout } = useAuth();
@@ -107,9 +101,7 @@ export default function Home() {
                 <p className="text-gray-600 text-sm mb-3">
                   {formatDate(post.createdAt)}
                 </p>
-                <p className="text-gray-700 mb-4">
-                  {stripHtml(post.content).slice(0, 150)}...
-                </p>
+                <PostPreview content={post.content}/>
                 <Link 
                   href={`/blog/${post.slug}`}
                   className="text-gray-400 hover:underline hover:underline text-sm"

@@ -8,20 +8,21 @@ import {
     query, 
     where, 
     orderBy,
-    serverTimestamp
   } from 'firebase/firestore';
   import { db } from './firebase';
   import { BlogPost } from './types';
+
+  type CreateBlogPostInput = Omit<BlogPost, 'id'>;
   
-  export const createBlogPost = async (post: BlogPost) => {
+  export const createBlogPost = async (post: CreateBlogPostInput): Promise<BlogPost> => {
     try {
       const postsCollection = collection(db, 'posts');
-      const docRef = await addDoc(postsCollection, {
+      const docRef = await addDoc(postsCollection, post);
+    
+      return {
         ...post,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
-      });
-      return docRef.id;
+        id: docRef.id
+      };
     } catch (error) {
       console.error("Error creating blog post", error);
       throw error;

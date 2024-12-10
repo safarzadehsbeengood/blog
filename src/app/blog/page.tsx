@@ -7,21 +7,8 @@ import { useState, useEffect } from 'react';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Timestamp } from 'firebase/firestore';
-
-// Helper function to strip HTML tags
-const stripHtml = (html: string) => {
-  const tmp = document.createElement('div');
-  tmp.innerHTML = html;
-  return tmp.textContent || tmp.innerText || '';
-};
-
-interface BlogPost {
-  id: string;
-  title: string;
-  content: string;
-  slug: string;
-  createdAt: Date | Timestamp;
-}
+import { BlogPost } from '@/lib/types';
+import PostPreview from '@/components/PostPreview';
 
 export default function BlogPage() {
   const { user } = useAuth();
@@ -30,8 +17,11 @@ export default function BlogPage() {
 
   const fetchPosts = async () => {
     try {
-      const posts = await getBlogPosts();
-      setPosts(posts);
+      const fetchedPosts = await getBlogPosts();
+      const validPosts = fetchedPosts.filter((post): post is BlogPost => {
+        return post.id !== undefined && post.id !== null;
+      });
+      setPosts(validPosts);
     } catch (error) {
       console.error('Error fetching posts:', error);
     } finally {
@@ -94,15 +84,13 @@ export default function BlogPage() {
           {posts.map((post) => (
             <div 
               key={post.id} 
-              className="border rounded-lg p-6 shadow-md hover:shadow-lg transition flex flex-col items-center text-center"
+              className="border rounded-lg p-6 shadow-md hover:shadow-lg transition text-center"
             >
               <div className="text-2xl font-semibold mb-3">{post.title}</div>
-              <p className="text-gray-600 text-sm mb-3">
-                Published on {formatDate(post.createdAt)}
+              <p className="text-gray-200 text-sm mb-3">
+                {formatDate(post.createdAt)}
               </p>
-              <p className="text-gray-600 mb-4">
-                {stripHtml(post.content).slice(0, 150)}...
-              </p>
+              <PostPreview content={post.content}/>
               <div className="flex items-center justify-center gap-4 w-full mt-auto">
                 <Link 
                   href={`/blog/${post.slug}`} 

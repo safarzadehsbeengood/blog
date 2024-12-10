@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createBlogPost } from '@/lib/blogUtils';
 import { useAuth } from '@/contexts/AuthContext';
-import { useEditor, EditorContent } from '@tiptap/react';
+import { useEditor, EditorContent, Editor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
 
@@ -77,7 +77,7 @@ const editorStyles = `
   }
 `;
 
-const MenuBar = ({ editor }: { editor: any }) => {
+const MenuBar = ({ editor }: { editor: Editor }) => {
   if (!editor) return null;
 
   const addImage = (file: File) => {
@@ -300,9 +300,9 @@ export default function CreatePostPage() {
             Content
           </label>
           <div className="border rounded">
-            <MenuBar editor={editor} />
+            {editor && <MenuBar editor={editor} />}
             <div className="p-4">
-              <EditorContent editor={editor} />
+              {editor && <EditorContent editor={editor} />}
             </div>
           </div>
         </div>

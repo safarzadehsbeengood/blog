@@ -71,13 +71,14 @@ const postStyles = `
   }
 `;
 
-export default async function BlogPostPage({ 
-  params 
-}: { 
-  params: { slug: string } 
-}) {
+interface Props {
+  params: Promise<{ slug: string }>;
+}
+
+export default async function BlogPostPage({ params }: Props) {
+  const { slug } = await params;
   const posts = await getBlogPosts();
-  const post = posts.find(p => p.slug === params.slug);
+  const post = posts.find(p => p.slug === slug);
 
   if (!post) {
     notFound();
