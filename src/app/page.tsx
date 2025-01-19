@@ -43,7 +43,7 @@ export default function Home() {
       <div className="flex space-x-4 mb-12">
         <Link 
           href="/blog" 
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+          className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-500 transition"
         >
           View Blog Posts
         </Link>
@@ -52,13 +52,13 @@ export default function Home() {
           <>
             <Link 
               href="/admin/create-post" 
-              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
+              className="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-600 transition"
             >
               Create New Post
             </Link>
             <button 
               onClick={() => logout()}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+              className="bg-red-900 text-white px-4 py-2 rounded hover:bg-red-700 transition"
             >
               Logout
             </button>
@@ -66,7 +66,7 @@ export default function Home() {
         ) : (
           <Link 
             href="/admin/login" 
-            className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 transition"
+            className="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-500 transition"
           >
             Login
           </Link>
@@ -81,39 +81,25 @@ export default function Home() {
 
       <section>
         <h2 className="text-2xl font-bold mb-6">Latest Posts</h2>
-        {loading ? (
-          <div className="text-gray-600">Loading latest posts...</div>
-        ) : latestPosts.length > 0 ? (
-          <div className="grid md:grid-cols-3 gap-6">
-            {latestPosts.map((post) => (
-              <div 
-                key={post.id} 
-                className="border rounded-lg p-6 shadow-md hover:shadow-lg transition"
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {latestPosts.map((post) => (
+            <div key={post.id} className="relative h-[300px]">
+              <Link
+                href={`/blog/${post.slug}`}
+                className="block absolute inset-0 border rounded-lg p-6 shadow-md transition text-center cursor-pointer
+                         hover:shadow-xl dark:hover:bg-gray-800 hover:bg-gray-50 overflow-hidden"
               >
-                <div className="text-xl font-semibold mb-2">
-                  <Link 
-                    href={`/blog/${post.slug}`}
-                    className="text-gray-400 hover:text-white hover:underline"
-                  >
-                    {post.title}
-                  </Link>
-                </div>
-                <p className="text-gray-600 text-sm mb-3">
+                <div className="text-2xl font-semibold mb-3">{post.title}</div>
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
                   {formatDate(post.createdAt)}
                 </p>
-                <PostPreview content={post.content}/>
-                <Link 
-                  href={`/blog/${post.slug}`}
-                  className="text-gray-400 hover:underline hover:underline text-sm"
-                >
-                  Read More →
-                </Link>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-600">No blog posts yet.</p>
-        )}
+                <div className="overflow-hidden">
+                  <PostPreview content={post.content} />
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
 
         {latestPosts.length > 0 && (
           <div className="mt-8 text-center">

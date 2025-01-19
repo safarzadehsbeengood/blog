@@ -82,32 +82,30 @@ export default function BlogPage() {
       ) : (
         <div className="grid md:grid-cols-2 gap-6">
           {posts.map((post) => (
-            <div 
-              key={post.id} 
-              className="border rounded-lg p-6 shadow-md hover:shadow-lg transition text-center"
-            >
-              <div className="text-2xl font-semibold mb-3">{post.title}</div>
-              <p className="text-gray-200 text-sm mb-3">
-                {formatDate(post.createdAt)}
-              </p>
-              <PostPreview content={post.content}/>
-              <div className="flex items-center justify-center gap-4 w-full mt-auto">
-                <Link 
-                  href={`/blog/${post.slug}`} 
-                  className="text-blue-500 hover:underline"
+            <div key={post.id} className="relative h-[300px]">
+              <Link 
+                href={`/blog/${post.slug}`}
+                className="block absolute inset-0 border rounded-lg p-6 shadow-md transition text-center cursor-pointer
+                         hover:shadow-xl dark:hover:bg-gray-800 hover:bg-gray-50 overflow-hidden"
+              >
+                <div className="text-2xl font-semibold mb-3">{post.title}</div>
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
+                  {formatDate(post.createdAt)}
+                </p>
+                <div className="overflow-hidden">
+                  <PostPreview content={post.content}/>
+                </div>
+              </Link>
+              {user && (
+                <button
+                  onClick={() => handleDelete(post.id)}
+                  className="absolute top-4 right-4 p-2 text-gray-400 
+                           hover:text-red-500 dark:hover:text-red-400 transition z-10"
+                  aria-label="Delete post"
                 >
-                  Read More
-                </Link>
-                {user && (
-                  <button
-                    onClick={() => handleDelete(post.id)}
-                    className="text-red-500 hover:text-red-700 transition"
-                    aria-label="Delete post"
-                  >
-                    Delete
-                  </button>
-                )}
-              </div>
+                  ✕
+                </button>
+              )}
             </div>
           ))}
         </div>

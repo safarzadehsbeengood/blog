@@ -6,8 +6,8 @@ const Title = () => {
             <div className="w-9/10 flex justify-left p-5">
                 <Link
                     href="/"
-                    className="hover:text-white text-4xl">
-                ryan safa 
+                    className="text-4xl hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                    ryan safa 
                 </Link>
             </div>
         </>
