@@ -5,6 +5,7 @@ import { JetBrains_Mono } from 'next/font/google'
 import "../styles/globals.css";
 import Navbar from '@/components/NavBar';
 import Title from '@/components/Title';
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'] });
 
@@ -20,18 +21,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${jetbrainsMono.className} antialiased`}
-      >
+      <body className={`${jetbrainsMono.className} antialiased transition-colors duration-200`}>
         <AuthProvider>
-          <Title />
-          <Navbar />
-          <div className="mx-auto max-w-5xl bg-black min-h-screen shadow-lg">
-            <main className="p-4">
-              {children}
-            </main>
-
-          </div>
+          <ThemeProvider>
+            <Title />
+            <Navbar />
+            <div className="mx-auto max-w-5xl min-h-screen shadow-lg">
+              <main className="p-4">
+                {children}
+              </main>
+            </div>
+          </ThemeProvider>
         </AuthProvider>
       </body>
     </html>
